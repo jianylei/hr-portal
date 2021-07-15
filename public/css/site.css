@@ -1,0 +1,46 @@
+body{
+    font-family: 'Mukta', sans-serif;
+    background-color: #343434;
+    color: #E2E2E2;
+}
+:is(h1, h2, h3, h4, h5, h6) {
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+a{
+    color: #4fbfde;
+}
+legend{
+    color: white;
+}
+.container{
+    padding-top: 60px;
+}
+.navbar-inverse .navbar-brand{
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #4fbfde;
+}
+.navbar-inverse .navbar-brand:hover{
+    color: #4fbfde;
+}
+.navbar-nav{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.navbar{
+    border-radius: 0;
+}
+.form-control{
+    background-color: white;
+    border-style: none;
+}
+#imageFile{
+    background-color: #666666;
+    border-style: none;
+    color: #C9C9C9;
+}
+.btn{
+    background-color: #4fbfde;
+    color: #343434;
+}
+
+
