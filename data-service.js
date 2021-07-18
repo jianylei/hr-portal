@@ -1,19 +1,3 @@
-
-/************************************************************************ *********
-* WEB322 – Assignment 03
-* I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
-* of this assignment has been copied manually or electronically from any other source
-* (including 3rd party web sites) or distributed to other students. *
-* Name: Danny Student ID: 164700197 Date: 06/20/21 *
-* Online (Heroku) Link: https://stormy-depths-15805.herokuapp.com/
-* ********************************************************************************/
-const fs = require("fs");
-
-let employees = [];
-let departments = [];
-let darkmode = true;
-
-
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
         fs.readFile('./data/departments.json', (err, data) => {
@@ -168,14 +152,3 @@ module.exports.updateEmployee = function(employeeData){
         reject("query returned 0 results");
     })
 };
-
-module.exports.changeTheme = function(){
-    if(darkmode){
-        const nav = document.querySelector("nav");
-        nav.className = "nav navbar-default";
-    }
-    else{
-        const nav = document.querySelector("nav");
-        nav.className = "nav navbar-inverse";
-    }
-}
