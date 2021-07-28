@@ -63,7 +63,11 @@ app.get("/about", (req,res) => {
 })
 
 app.get("/employees/add", (req,res) => {
-    res.render("addEmployee");
+    data.getDepartments().then((data)=>{
+        res.render("addEmployee",{departments: data});
+    }).catch((err)=>{
+        res.render("addEmployee",{departments: []});
+    })
 })
 
 app.get("/images/add", (req,res) => {
