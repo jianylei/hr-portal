@@ -208,7 +208,7 @@ module.exports.getDepartmentById = function(id){
                 departmentId: id
             }
         }).then(function(data){
-            resolve(data);
+            resolve(data[0]);
         }).catch((err)=>{
             reject("No data to be displayed");
         })
