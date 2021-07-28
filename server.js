@@ -38,37 +38,37 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req,res,next){
     let route = req.baseUrl + req.path;
     app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, ""); next();
-});
+})
 
 const storage = multer.diskStorage({
     destination: "./public/images/uploaded",
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
-});
+})
 const upload = multer({storage: storage});
 
 app.get("/images", function(req, res){
     fs.readdir(__dirname + "/public/images/uploaded", function(err, images){
         res.render("images", {data: images});
     });
-});
+})
 
 app.get("/", (req,res) => {
     res.render("home");
-});
+})
 
 app.get("/about", (req,res) => {
     res.render("about");
-});
+})
 
 app.get("/employees/add", (req,res) => {
     res.render("addEmployee");
-});
+})
 
 app.get("/images/add", (req,res) => {
     res.render("addImage");
-});
+})
 
 app.get("/departments", (req,res) => {
     data.getDepartments().then((data)=>{
@@ -81,7 +81,7 @@ app.get("/departments", (req,res) => {
     }).catch(function(err){
         res.render("departments",{ message: "no results" });
     });
-});
+})
 
 app.get("/employees", function(req, res) {
     if(req.query.status){
@@ -132,7 +132,7 @@ app.get("/employees", function(req, res) {
             res.render("employees",{ message: "no results" });
         });
     }    
-});
+})
 
 app.get("/employee/:value",  function(req, res){
     data.getEmployeesByNum(req.params.value).then(function(data){
@@ -141,17 +141,31 @@ app.get("/employee/:value",  function(req, res){
     .catch(function(err){
         res.render("employee",{message:"no results"});
     });
-});
+})
 
+app.get("/departments/add",  function(req, res){
+    res.render("addDepartment");
+})
+
+app.get("/department/:departmentId",  function(req, res){
+    data.getDepartmentById(req.params.value).then(function(data){
+        res.render("department",{deartment:data});
+    })
+    .catch(function(err){
+        res.status(404).send("Department Not Found");
+    });
+})
+
+//post
 app.post("/images/add", upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
-});
+})
 
 app.post("/employees/add", (req, res) => {
     data.addEmployee(req.body).then(() => {
         res.redirect("/employees");
     });
-});
+})
 
 app.post("/employee/update", (req, res) => { 
     data.updateEmployee(req.body).then(function() {
@@ -159,11 +173,25 @@ app.post("/employee/update", (req, res) => {
     }).catch(function(err){
         console.log(err);
     })
-});
+})
+
+app.post("/departments/add", (req, res) => {
+    data.addDepartment(req.body).then(() => {
+        res.redirect("/departments");
+    });
+})
+
+app.post("/department/update", (req, res) => { 
+    data.updateDepartment(req.body).then(function() {
+        res.redirect("/departments");
+    }).catch(function(err){
+        console.log(err);
+    })
+})
 
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
-  });
+})
 
 data.initialize().then(function(){
     app.listen(HTTP_PORT, function(){
@@ -171,4 +199,4 @@ data.initialize().then(function(){
     });
 }).catch(function(err){
     console.log("unable to start server: " + err);
-});
+})
