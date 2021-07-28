@@ -7,9 +7,9 @@ var sequelize = new Sequelize('d3fepb0l291e10', 'ysfguwnoptrxei', '6b75adf1322ca
         ssl: { rejectUnauthorized: false }
     },
     query: { raw: true }
-});
+})
 
-var Employee = sequelize.define('project', {
+var Employee = sequelize.define('employee', {
     employeeNum: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -29,16 +29,16 @@ var Employee = sequelize.define('project', {
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
     hireDate: Sequelize.STRING
-});
+})
 
-var Department = sequelize.define('project', {
+var Department = sequelize.define('department', {
     departmentId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     departmentName: Sequelize.STRING
-});
+})
 
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
@@ -63,7 +63,7 @@ module.exports.getAllEmployees = function(){
 module.exports.getManagers = function () {
     return new Promise(function (resolve, reject) { reject();
     });
-};
+}
 
 module.exports.getDepartments = function(){
     return new Promise(function (resolve, reject) { 
@@ -73,7 +73,63 @@ module.exports.getDepartments = function(){
             reject("No data to be displayed");
         })
     });
-};
+}
+
+module.exports.getEmployeesByStatus = function(status){
+    return new Promise(function (resolve, reject) { 
+        Employee.findAll({
+            where: {
+                status: status
+            }
+        }).then(function(data){
+            resolve(data);
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}
+
+module.exports.getEmployeesByDepartment = function(departmentNum){
+    return new Promise(function (resolve, reject) { 
+        Employee.findAll({
+            where: {
+                department: departmentNum
+            }
+        }).then(function(data){
+            resolve(data);
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}
+
+module.exports.getEmployeesByManager = function(manager){
+    return new Promise(function (resolve, reject) { 
+        Employee.findAll({
+            where: {
+                employeeManagerNum: manager
+            }
+        }).then(function(data){
+            resolve(data);
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}
+
+module.exports.getEmployeesByNum = function(num){
+    return new Promise(function (resolve, reject) { 
+        Employee.findAll({
+            where: {
+                employeeNum: num
+            }
+        }).then(function(data){
+            resolve(data);
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}
 
 module.exports.addEmployee = function (employeeData) {
     return new Promise(function (resolve, reject) { 
@@ -89,64 +145,7 @@ module.exports.addEmployee = function (employeeData) {
             reject("Unable to add new employee");
         }) 
     });
-};
-
-
-module.exports.getEmployeesByStatus = function(status){
-    return new Promise(function (resolve, reject) { 
-        Employee.findAll({
-            where: {
-                status: status
-            }
-        }).then(function(data){
-            resolve(data);
-        }).catch((err)=>{
-            reject("No data to be displayed");
-        })
-    });
-};
-
-module.exports.getEmployeesByDepartment = function(departmentNum){
-    return new Promise(function (resolve, reject) { 
-        Employee.findAll({
-            where: {
-                department: departmentNum
-            }
-        }).then(function(data){
-            resolve(data);
-        }).catch((err)=>{
-            reject("No data to be displayed");
-        })
-    });
-};
-
-module.exports.getEmployeesByManager = function(manager){
-    return new Promise(function (resolve, reject) { 
-        Employee.findAll({
-            where: {
-                employeeManagerNum: manager
-            }
-        }).then(function(data){
-            resolve(data);
-        }).catch((err)=>{
-            reject("No data to be displayed");
-        })
-    });
-};
-
-module.exports.getEmployeesByNum = function(num){
-    return new Promise(function (resolve, reject) { 
-        Employee.findAll({
-            where: {
-                employeeNum: num
-            }
-        }).then(function(data){
-            resolve(data);
-        }).catch((err)=>{
-            reject("No data to be displayed");
-        })
-    });
-};
+}
 
 module.exports.updateEmployee = function(employeeData){
     return new Promise(function (resolve, reject) { 
@@ -165,5 +164,53 @@ module.exports.updateEmployee = function(employeeData){
         }).catch((err)=>{
             reject("Unable to update employee");
         }) 
+    })
+}
+
+module.exports.addDepartment = function(departmentData){
+    return new Promise(function (resolve, reject) { 
+
+        for(var i in departmentData) {
+                if(departmentData[i] == '') { departmentData[i] = null; }
+        }
+    
+        Department.create(edepartmentData).then(()=>{
+            resolve();
+        }).catch((err)=>{
+            reject("Unable to add new Department");
+        }) 
     });
-};
+}
+
+module.exports.updateDepartment = function(departmentData){
+    return new Promise(function (resolve, reject) { 
+
+        for(var i in departmentData) {
+            if(departmentData[i] == '') { departmentData[i] = null; }
+        }
+
+        Department.update(departmentData, {
+            where: {
+                departmentId: departmentData.departmentId
+            }
+        }).then(()=>{
+            resolve();
+        }).catch((err)=>{
+            reject("Unable to update employee");
+        }) 
+    })
+}
+
+module.exports.getDepartmentById = function(id){
+    return new Promise(function (resolve, reject) { 
+        Department.findAll({
+            where: {
+                departmentId: id
+            }
+        }).then(function(data){
+            resolve(data);
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}
