@@ -1,6 +1,6 @@
 body{
     font-family: 'Mukta', sans-serif;
-    background-color: #343434;
+    background-color: #181818;
     color: #E2E2E2;
 }
 :is(h1, h2, h3, h4, h5, h6) {
@@ -8,7 +8,7 @@ body{
     font-family: 'Source Sans Pro', sans-serif;
 }
 a{
-    color: #4fbfde;
+    color: #1DA1F2;
 }
 legend{
     color: white;
@@ -18,10 +18,10 @@ legend{
 }
 .navbar-inverse .navbar-brand{
     font-family: 'Source Sans Pro', sans-serif;
-    color: #4fbfde;
+    color: #1DA1F2;
 }
 .navbar-inverse .navbar-brand:hover{
-    color: #4fbfde;
+    color: #1DA1F2;
 }
 .navbar-nav{
     font-family: 'Source Sans Pro', sans-serif;
@@ -38,9 +38,8 @@ legend{
     border-style: none;
     color: #C9C9C9;
 }
-.btn{
-    background-color: #4fbfde;
-    color: #343434;
+.btn-success{
+    background-color: #1DA1F2;
     border-style: none;
 }
 

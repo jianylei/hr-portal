@@ -218,3 +218,17 @@ module.exports.getDepartmentById = function(id){
         })
     });
 }
+
+module.exports.deleteEmployeeByNum = function(empNum){
+    return new Promise(function (resolve, reject) { 
+        Employee.destroy({
+            where: {
+                employeeNum: empNum
+            }
+        }).then(()=>{
+            resolve();
+        }).catch((err)=>{
+            reject("No data to be displayed");
+        })
+    });
+}

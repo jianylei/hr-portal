@@ -185,6 +185,16 @@ app.get("/department/:departmentId",  function(req, res){
     });
 })
 
+app.get("/employees/delete/:empNum",  function(req, res){
+    console.log(1);
+    data.deleteEmployeeByNum(req.params.empNum).then(function(){
+        console.log(2);
+        res.redirect("/employees");
+    }).catch(function(err){ console.log(3);
+        res.status(500).send( "Unable to Remove Employee / Employee not found)");
+    });
+})
+
 //post
 app.post("/images/add", upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
