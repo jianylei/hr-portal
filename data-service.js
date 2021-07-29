@@ -42,7 +42,9 @@ var Department = sequelize.define('department', {
 
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
-       sequelize.sync().then(()=>{
+       sequelize.sync().then((Employee)=>{
+           resolve();
+       }).then((Deparment)=>{
            resolve();
        }).catch((err)=>{
             reject("Unable to sync with database");
@@ -124,7 +126,7 @@ module.exports.getEmployeesByNum = function(num){
                 employeeNum: num
             }
         }).then(function(data){
-            resolve(data);
+            resolve(data[0]);
         }).catch((err)=>{
             reject("No data to be displayed");
         })
@@ -159,8 +161,8 @@ module.exports.updateEmployee = function(employeeData){
             where: {
                 employeeNum: employeeData.employeeNum
             }
-        }).then(()=>{
-            resolve();
+        }).then((data)=>{
+            resolve(data);
         }).catch((err)=>{
             reject("Unable to update employee");
         }) 
@@ -174,7 +176,7 @@ module.exports.addDepartment = function(departmentData){
                 if(departmentData[i] == '') { departmentData[i] = null; }
         }
     
-        Department.create(edepartmentData).then(()=>{
+        Department.create(departmentData).then(()=>{
             resolve();
         }).catch((err)=>{
             reject("Unable to add new Department");
@@ -189,12 +191,14 @@ module.exports.updateDepartment = function(departmentData){
             if(departmentData[i] == '') { departmentData[i] = null; }
         }
 
-        Department.update(departmentData, {
+        Department.update(
+            departmentData
+        , {
             where: {
                 departmentId: departmentData.departmentId
             }
-        }).then(()=>{
-            resolve();
+        }).then((data)=>{
+            resolve(data);
         }).catch((err)=>{
             reject("Unable to update employee");
         }) 

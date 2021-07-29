@@ -25,10 +25,14 @@ app.engine('.hbs', exphbs({
         navLink: function(url, options){ 
             return '<li' +((url == app.locals.activeRoute) ? ' class="active" ' : '') + '><a href="' + url + '">' + options.fn(this) + '</a></li>'; 
         },
-        equal: function (lvalue, rvalue, options) { if (arguments.length < 3)
+        equal: function (lvalue, rvalue, options) { 
+            if (arguments.length < 3)
             throw new Error("Handlebars Helper equal needs 2 parameters"); if (lvalue != rvalue) {
             return options.inverse(this); } else {
             return options.fn(this); }
+        },
+        log: function(obj) {
+            console.log(obj);
         }
     }
 }));
@@ -138,19 +142,10 @@ app.get("/employees", function(req, res) {
     }    
 })
 
-app.get("/employee/:value",  function(req, res){
-    data.getEmployeesByNum(req.params.value).then(function(data){
-        res.render("employee",{employee:data});
-    })
-    .catch(function(err){
-        res.render("employee",{message:"no results"});
-    });
-})
-
 app.get("/employee/:empNum", (req, res) => {
     let viewData = {};
-
-    data.getEmployeeByNum(req.params.empNum).then((data) => {
+    
+    data.getEmployeesByNum(req.params.empNum).then((data) => {
         if (data) {
             viewData.employee = data;
         } else {
@@ -158,10 +153,9 @@ app.get("/employee/:empNum", (req, res) => {
         }
     }).catch(() => {
         viewData.employee = null;
-    }).then(dataService.getDepartments)
+    }).then(data.getDepartments)
         .then((data) => {
             viewData.departments = data;
-
             for (let i = 0; i < viewData.departments.length; i++) {
                 if (viewData.departments[i].departmentId == viewData.employee.department) {
                     viewData.departments[i].selected = true;
@@ -183,8 +177,8 @@ app.get("/departments/add",  function(req, res){
 })
 
 app.get("/department/:departmentId",  function(req, res){
-    data.getDepartmentById(req.params.value).then(function(data){
-        res.render("department",{deartment:data});
+    data.getDepartmentById(req.params.departmentId).then(function(data){
+        res.render("department",{department: data});
     })
     .catch(function(err){
         res.status(404).send("Department Not Found");
