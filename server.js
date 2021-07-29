@@ -169,6 +169,8 @@ app.get("/employee/:empNum", (req, res) => {
             } else {
                 res.render("employee", { viewData: viewData });
             }
+        }).catch((err)=>{
+            res.status(500).send("Employee Not Found");
         });
 });
 
@@ -186,12 +188,10 @@ app.get("/department/:departmentId",  function(req, res){
 })
 
 app.get("/employees/delete/:empNum",  function(req, res){
-    console.log(1);
     data.deleteEmployeeByNum(req.params.empNum).then(function(){
-        console.log(2);
         res.redirect("/employees");
-    }).catch(function(err){ console.log(3);
-        res.status(500).send( "Unable to Remove Employee / Employee not found)");
+    }).catch(function(err){ 
+        res.status(500).send("Unable to Remove Employee / Employee not found)");
     });
 })
 
@@ -203,6 +203,8 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
 app.post("/employees/add", (req, res) => {
     data.addEmployee(req.body).then(() => {
         res.redirect("/employees");
+    }).catch((err)=>{
+        res.status(500).send("Unable to add Employee / Employee not found)");
     });
 })
 
@@ -217,6 +219,8 @@ app.post("/employee/update", (req, res) => {
 app.post("/departments/add", (req, res) => {
     data.addDepartment(req.body).then(() => {
         res.redirect("/departments");
+    }).catch((err)=>{
+        res.status(500).send("Unable to add Department / Department not found)");
     });
 })
 
