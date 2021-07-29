@@ -42,5 +42,8 @@ legend{
     background-color: #1DA1F2;
     border-style: none;
 }
-
+.photo{
+    padding: 1.1em 1.1em 1.1em 1.1em;
+    text-align: center;
+}
 
