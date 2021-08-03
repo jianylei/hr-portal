@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 var sequelize = new Sequelize('d3fepb0l291e10', 'ysfguwnoptrxei', '6b75adf1322ca680bd13e801d003039d498c7e37aeebdb7bb21085a0b4d48be1', {
     host: 'ec2-54-83-82-187.compute-1.amazonaws.com',
     dialect: 'postgres',
@@ -200,7 +201,7 @@ module.exports.updateDepartment = function(departmentData){
         }).then((data)=>{
             resolve(data);
         }).catch((err)=>{
-            reject("Unable to update employee");
+            reject("Unable to update department");
         }) 
     })
 }
