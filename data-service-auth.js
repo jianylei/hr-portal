@@ -25,4 +25,25 @@ module.exports.initialize = function () {
     db.once('open', ()=>{
     User = db.model("users", userSchema);
     resolve(); });
-    }); }
+    }); 
+}
+
+module.exports.registerUser = function (userData) {
+    return new Promise(function (resolve, reject) {
+        if(userData.password1 != userData.password2) {
+            reject("Passwords do not match");
+        }
+        let newUser = new User(userData);
+        newUser.save((err) => {
+            if(err && err.code == 11000) {
+              reject("User Name already taken");
+            } 
+            else if(err && err.code != 11000) {
+              reject("There was an error creating the user: " + err);
+            }
+            else {
+                resolve();
+            }
+          });
+    }); 
+}
