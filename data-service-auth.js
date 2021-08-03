@@ -47,3 +47,34 @@ module.exports.registerUser = function (userData) {
           });
     }); 
 }
+
+module.exports.checkUser = function (userData) {
+    return new Promise(function (resolve, reject) {
+       User.find({userName: userData.userName})
+    }).exec()
+    .then((user)=>{
+        if(user[0].password != userData.password) {
+            reject("Incorrect Password for user: " + userData.userName);
+        }
+        user[0].loginHistory.push({
+            dateTime: (new Date()).toString(),
+            userAgent: userData.userAgent
+        });
+
+        User.update({
+            userName: user[0].userName
+        }, {
+            $set: {
+                loginHistory: user[0].loginHistory
+            }
+        }).exec()
+        .then(() => {
+            resolve(user[0]);
+        })
+        .catch((err) => {
+            reject("There was an error verifying the user: " + err);
+        });
+    }).catch((err)=>{
+        reject("Unable to find user: " + userData.userName);
+    }); 
+}
