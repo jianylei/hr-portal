@@ -11,6 +11,7 @@ const dataServiceAuth = require("data-service-auth.js");
 const express = require("express");
 const multer = require("multer");
 const exphbs = require("express-handlebars");
+const clientSessions = require("client-sessions")
 const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
