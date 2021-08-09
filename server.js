@@ -67,6 +67,14 @@ app.use(function(req, res, next) {
     res.locals.session = req.session; next();
 });
 
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+      res.redirect("/login");
+    } else {
+      next();
+    }
+}
+
 app.get("/images", function (req, res) {
     fs.readdir(__dirname + "/public/images/uploaded", function (err, images) {
         res.render("images", { data: images });
