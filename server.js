@@ -56,6 +56,17 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
+app.use(clientSessions({
+    cookieName: "session",
+    secret: "web322-a6",
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60
+}));
+
+app.use(function(req, res, next) { 
+    res.locals.session = req.session; next();
+});
+
 app.get("/images", function (req, res) {
     fs.readdir(__dirname + "/public/images/uploaded", function (err, images) {
         res.render("images", { data: images });
