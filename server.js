@@ -75,7 +75,7 @@ function ensureLogin(req, res, next) {
     }
 }
 
-app.get("/images", function (req, res) {
+app.get("/images", ensureLogin, function (req, res) {
     fs.readdir(__dirname + "/public/images/uploaded", function (err, images) {
         res.render("images", { data: images });
     });
@@ -89,7 +89,7 @@ app.get("/about", (req, res) => {
     res.render("about");
 })
 
-app.get("/employees/add", (req, res) => {
+app.get("/employees/add", ensureLogin, (req, res) => {
     data.getDepartments().then((data) => {
         res.render("addEmployee", { departments: data });
     }).catch((err) => {
@@ -97,11 +97,11 @@ app.get("/employees/add", (req, res) => {
     })
 })
 
-app.get("/images/add", (req, res) => {
+app.get("/images/add", ensureLogin, (req, res) => {
     res.render("addImage");
 })
 
-app.get("/departments", (req, res) => {
+app.get("/departments", ensureLogin, (req, res) => {
     data.getDepartments().then((data) => {
         if (data.length > 0) {
             res.render("departments", { departments: data });
@@ -114,7 +114,7 @@ app.get("/departments", (req, res) => {
     });
 })
 
-app.get("/employees", function (req, res) {
+app.get("/employees", ensureLogin, function (req, res) {
     if (req.query.status) {
         data.getEmployeesByStatus(req.query.status).then((data) => {
             if (data.length > 0) {
@@ -165,7 +165,7 @@ app.get("/employees", function (req, res) {
     }
 })
 
-app.get("/employee/:empNum", (req, res) => {
+app.get("/employee/:empNum", ensureLogin, (req, res) => {
     let viewData = {};
 
     data.getEmployeesByNum(req.params.empNum).then((data) => {
@@ -197,11 +197,11 @@ app.get("/employee/:empNum", (req, res) => {
         });
 });
 
-app.get("/departments/add", function (req, res) {
+app.get("/departments/add", ensureLogin, function (req, res) {
     res.render("addDepartment");
 })
 
-app.get("/department/:departmentId", function (req, res) {
+app.get("/department/:departmentId", ensureLogin, function (req, res) {
     data.getDepartmentById(req.params.departmentId).then(function (data) {
         res.render("department", { department: data });
     })
@@ -210,7 +210,7 @@ app.get("/department/:departmentId", function (req, res) {
         });
 })
 
-app.get("/employees/delete/:empNum", function (req, res) {
+app.get("/employees/delete/:empNum", ensureLogin, function (req, res) {
     data.deleteEmployeeByNum(req.params.empNum).then(function () {
         res.redirect("/employees");
     }).catch(function (err) {
@@ -219,11 +219,11 @@ app.get("/employees/delete/:empNum", function (req, res) {
 })
 
 //post
-app.post("/images/add", upload.single("imageFile"), (req, res) => {
+app.post("/images/add", ensureLogin, upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
 })
 
-app.post("/employees/add", (req, res) => {
+app.post("/employees/add", ensureLogin, (req, res) => {
     data.addEmployee(req.body).then(() => {
         res.redirect("/employees");
     }).catch((err) => {
@@ -231,7 +231,7 @@ app.post("/employees/add", (req, res) => {
     });
 })
 
-app.post("/employee/update", (req, res) => {
+app.post("/employee/update", ensureLogin, (req, res) => {
     data.updateEmployee(req.body).then(function () {
         res.redirect("/employees");
     }).catch(function (err) {
@@ -239,7 +239,7 @@ app.post("/employee/update", (req, res) => {
     })
 })
 
-app.post("/departments/add", (req, res) => {
+app.post("/departments/add", ensureLogin, (req, res) => {
     data.addDepartment(req.body).then(() => {
         res.redirect("/departments");
     }).catch((err) => {
@@ -247,7 +247,7 @@ app.post("/departments/add", (req, res) => {
     });
 })
 
-app.post("/department/update", (req, res) => {
+app.post("/department/update", ensureLogin, (req, res) => {
     data.updateDepartment(req.body).then(function () {
         res.redirect("/departments");
     }).catch(function (err) {
