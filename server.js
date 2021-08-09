@@ -282,6 +282,10 @@ app.post("/login",(req,res)=>{
         res.render("login", {errorMessage: err, userName: req.body.userName});
     })
 })
+app.get("/logout", (req, res)=>{
+    req.sessions.reset();
+    res.redirect('/');
+})
 
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
