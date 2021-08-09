@@ -255,6 +255,34 @@ app.post("/department/update", ensureLogin, (req, res) => {
     })
 })
 
+//routes for login/logout/register
+app.get("/login", (req, res)=>{
+    res.render("login");
+})
+app.get("/register", (req, res)=>{
+    res.render("register");
+})
+app.post("/register",(req,res)=>{
+    dataServiceAuth.registerUser(req.body).then((data)=>{
+        res.render("register", {successMessage: "User created"});
+    }).catch((err)=>{
+        res.render("register", {errorMessage: err, userName: req.body.userName});
+    })
+})
+app.post("/login",(req,res)=>{
+    req.body.userAgent = req.get('User-Agent');
+    dataServiceAuth.checkUser(req.body).then((data)=>{
+        req.session.user = {
+            userName: data.userName,
+            email: data.email,
+            loginHistory: data.loginHistory
+            }
+            res.redirect('/employees');
+    }).catch((err)=>{
+        res.render("login", {errorMessage: err, userName: req.body.userName});
+    })
+})
+
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
 })
