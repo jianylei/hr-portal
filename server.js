@@ -286,6 +286,9 @@ app.get("/logout", (req, res)=>{
     req.sessions.reset();
     res.redirect('/');
 })
+app.get("/userHistory", ensureLogin, (req, res)=>{
+    res.render("userHistory");
+})
 
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
