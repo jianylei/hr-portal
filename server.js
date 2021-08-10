@@ -283,7 +283,7 @@ app.post("/login",(req,res)=>{
     })
 });
 app.get("/logout", (req, res)=>{
-    req.sessions.reset();
+    req.session.reset();
     res.redirect('/');
 })
 app.get("/userHistory", ensureLogin, (req, res)=>{
