@@ -52,22 +52,20 @@
           {{#navLink "/images"}}Images{{/navLink}}
           {{#navLink "/employees"}}Employees{{/navLink}} {{#navLink "/departments"}}Departments{{/navLink}}
         </ul>
-        {{#else}}
+        {{else}}
         <form class="navbar-form navbar-right">
           <a href="/register" class="btn btn-success"><span
-              class="glyphicon glyphicon- cog"></span>&nbsp;&nbsp;Register</a>
+              class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Register</a>
           <a href="/login" class="btn btn-primary"><span
-              class="glyphicon glyphicon-chevron- right"></span>&nbsp;&nbsp;Log In</a>
+              class="glyphicon glyphicon-chevron-right"></span>&nbsp;&nbsp;Log In</a>
         </form>
         {{/if}}
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <div></div>
   <div class="container" id="toTop">
     {{{body}}}
   </div>
-
   <!-- Latest compiled and minified jQuery 3.2.1 JavaScript -->
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

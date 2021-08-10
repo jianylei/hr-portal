@@ -13,6 +13,11 @@ a{
 legend{
     color: white;
 }
+hr{
+    border: 1.7px solid gray;
+    border-radius: 5px;
+}
+
 .container{
     padding-top: 60px;
 }

@@ -7,7 +7,7 @@
 * Name: Danny Student ID: 164700197 Date: 07/30/21 *
 * Online (Heroku) Link: https://webapp-web322.herokuapp.com
 * ********************************************************************************/
-const dataServiceAuth = require("data-service-auth.js");
+const dataServiceAuth = require("./data-service-auth.js");
 const express = require("express");
 const multer = require("multer");
 const exphbs = require("express-handlebars");
