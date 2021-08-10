@@ -8,7 +8,7 @@ var sequelize = new Sequelize('d3fepb0l291e10', 'ysfguwnoptrxei', '6b75adf1322ca
         ssl: { rejectUnauthorized: false }
     },
     query: { raw: true }
-})
+});
 
 var Employee = sequelize.define('employee', {
     employeeNum: {
@@ -30,7 +30,7 @@ var Employee = sequelize.define('employee', {
     status: Sequelize.STRING,
     department: Sequelize.INTEGER,
     hireDate: Sequelize.STRING
-})
+});
 
 var Department = sequelize.define('department', {
     departmentId: {
@@ -39,7 +39,7 @@ var Department = sequelize.define('department', {
         autoIncrement: true
     },
     departmentName: Sequelize.STRING
-})
+});
 
 module.exports.initialize = function () {
     return new Promise( (resolve, reject) => {
@@ -51,7 +51,7 @@ module.exports.initialize = function () {
             reject("Unable to sync with database");
        });
     });
-}
+};
 
 module.exports.getAllEmployees = function(){
     return new Promise(function (resolve, reject) { 
@@ -61,12 +61,12 @@ module.exports.getAllEmployees = function(){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.getManagers = function () {
     return new Promise(function (resolve, reject) { reject();
     });
-}
+};
 
 module.exports.getDepartments = function(){
     return new Promise(function (resolve, reject) { 
@@ -76,7 +76,7 @@ module.exports.getDepartments = function(){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.getEmployeesByStatus = function(status){
     return new Promise(function (resolve, reject) { 
@@ -90,7 +90,7 @@ module.exports.getEmployeesByStatus = function(status){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.getEmployeesByDepartment = function(departmentNum){
     return new Promise(function (resolve, reject) { 
@@ -104,7 +104,7 @@ module.exports.getEmployeesByDepartment = function(departmentNum){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.getEmployeesByManager = function(manager){
     return new Promise(function (resolve, reject) { 
@@ -118,7 +118,7 @@ module.exports.getEmployeesByManager = function(manager){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.getEmployeesByNum = function(num){
     return new Promise(function (resolve, reject) { 
@@ -132,7 +132,7 @@ module.exports.getEmployeesByNum = function(num){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.addEmployee = function (employeeData) {
     return new Promise(function (resolve, reject) { 
@@ -148,7 +148,7 @@ module.exports.addEmployee = function (employeeData) {
             reject("Unable to add new employee");
         }) 
     });
-}
+};
 
 module.exports.updateEmployee = function(employeeData){
     return new Promise(function (resolve, reject) { 
@@ -168,7 +168,7 @@ module.exports.updateEmployee = function(employeeData){
             reject("Unable to update employee");
         }) 
     })
-}
+};
 
 module.exports.addDepartment = function(departmentData){
     return new Promise(function (resolve, reject) { 
@@ -183,7 +183,7 @@ module.exports.addDepartment = function(departmentData){
             reject("Unable to add new Department");
         }) 
     });
-}
+};
 
 module.exports.updateDepartment = function(departmentData){
     return new Promise(function (resolve, reject) { 
@@ -204,7 +204,7 @@ module.exports.updateDepartment = function(departmentData){
             reject("Unable to update department");
         }) 
     })
-}
+};
 
 module.exports.getDepartmentById = function(id){
     return new Promise(function (resolve, reject) { 
@@ -218,7 +218,7 @@ module.exports.getDepartmentById = function(id){
             reject("No data to be displayed");
         })
     });
-}
+};
 
 module.exports.deleteEmployeeByNum = function(empNum){
     return new Promise(function (resolve, reject) { 
@@ -232,4 +232,4 @@ module.exports.deleteEmployeeByNum = function(empNum){
             reject("No data to be displayed");
         })
     });
-}
+};

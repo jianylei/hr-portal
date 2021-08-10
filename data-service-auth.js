@@ -26,11 +26,11 @@ module.exports.initialize = function () {
     User = db.model("users", userSchema);
     resolve(); });
     }); 
-}
+};
 
 module.exports.registerUser = function (userData) {
     return new Promise(function (resolve, reject) {
-        if(userData.password1 != userData.password2) {
+        if(userData.password !== userData.password2) {
             reject("Passwords do not match");
         }
         let newUser = new User(userData);
@@ -46,16 +46,17 @@ module.exports.registerUser = function (userData) {
             }
           });
     }); 
-}
+};
 
 module.exports.checkUser = function (userData) {
     return new Promise(function (resolve, reject) {
-       User.find({userName: userData.userName})
+       User.find({
+           userName: userData.userName
     }).exec()
     .then((user)=>{
         if(user[0].password != userData.password) {
             reject("Incorrect Password for user: " + userData.userName);
-        }
+        };
         user[0].loginHistory.push({
             dateTime: (new Date()).toString(),
             userAgent: userData.userAgent
@@ -67,14 +68,17 @@ module.exports.checkUser = function (userData) {
             $set: {
                 loginHistory: user[0].loginHistory
             }
+        }, {
+                multi: false
         }).exec()
         .then(() => {
             resolve(user[0]);
         })
         .catch((err) => {
             reject("There was an error verifying the user: " + err);
-        });
+        })
     }).catch((err)=>{
         reject("Unable to find user: " + userData.userName);
+        }); 
     }); 
 }

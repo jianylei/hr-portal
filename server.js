@@ -46,14 +46,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     let route = req.baseUrl + req.path;
     app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, ""); next();
-})
+});
 
 const storage = multer.diskStorage({
     destination: "./public/images/uploaded",
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
     }
-})
+});
 const upload = multer({ storage: storage });
 
 app.use(clientSessions({
@@ -73,21 +73,21 @@ function ensureLogin(req, res, next) {
     } else {
       next();
     }
-}
+};
 
 app.get("/images", ensureLogin, function (req, res) {
     fs.readdir(__dirname + "/public/images/uploaded", function (err, images) {
         res.render("images", { data: images });
     });
-})
+});
 
 app.get("/", (req, res) => {
     res.render("home");
-})
+});
 
 app.get("/about", (req, res) => {
     res.render("about");
-})
+});
 
 app.get("/employees/add", ensureLogin, (req, res) => {
     data.getDepartments().then((data) => {
@@ -95,11 +95,11 @@ app.get("/employees/add", ensureLogin, (req, res) => {
     }).catch((err) => {
         res.render("addEmployee", { departments: [] });
     })
-})
+});
 
 app.get("/images/add", ensureLogin, (req, res) => {
     res.render("addImage");
-})
+});
 
 app.get("/departments", ensureLogin, (req, res) => {
     data.getDepartments().then((data) => {
@@ -112,7 +112,7 @@ app.get("/departments", ensureLogin, (req, res) => {
     }).catch(function (err) {
         res.render("departments", { message: "no results" });
     });
-})
+});
 
 app.get("/employees", ensureLogin, function (req, res) {
     if (req.query.status) {
@@ -163,7 +163,7 @@ app.get("/employees", ensureLogin, function (req, res) {
             res.render("employees", { message: "no results" });
         });
     }
-})
+});
 
 app.get("/employee/:empNum", ensureLogin, (req, res) => {
     let viewData = {};
@@ -199,7 +199,7 @@ app.get("/employee/:empNum", ensureLogin, (req, res) => {
 
 app.get("/departments/add", ensureLogin, function (req, res) {
     res.render("addDepartment");
-})
+});
 
 app.get("/department/:departmentId", ensureLogin, function (req, res) {
     data.getDepartmentById(req.params.departmentId).then(function (data) {
@@ -208,7 +208,7 @@ app.get("/department/:departmentId", ensureLogin, function (req, res) {
         .catch(function (err) {
             res.status(404).send("Department Not Found");
         });
-})
+});
 
 app.get("/employees/delete/:empNum", ensureLogin, function (req, res) {
     data.deleteEmployeeByNum(req.params.empNum).then(function () {
@@ -216,12 +216,12 @@ app.get("/employees/delete/:empNum", ensureLogin, function (req, res) {
     }).catch(function (err) {
         res.status(500).send("Unable to Remove Employee / Employee not found)");
     });
-})
+});
 
 //post
 app.post("/images/add", ensureLogin, upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
-})
+});
 
 app.post("/employees/add", ensureLogin, (req, res) => {
     data.addEmployee(req.body).then(() => {
@@ -229,7 +229,7 @@ app.post("/employees/add", ensureLogin, (req, res) => {
     }).catch((err) => {
         res.status(500).send("Unable to add Employee / Employee not found)");
     });
-})
+});
 
 app.post("/employee/update", ensureLogin, (req, res) => {
     data.updateEmployee(req.body).then(function () {
@@ -237,7 +237,7 @@ app.post("/employee/update", ensureLogin, (req, res) => {
     }).catch(function (err) {
         console.log(err);
     })
-})
+});
 
 app.post("/departments/add", ensureLogin, (req, res) => {
     data.addDepartment(req.body).then(() => {
@@ -245,7 +245,7 @@ app.post("/departments/add", ensureLogin, (req, res) => {
     }).catch((err) => {
         res.status(500).send("Unable to add Department / Department not found)");
     });
-})
+});
 
 app.post("/department/update", ensureLogin, (req, res) => {
     data.updateDepartment(req.body).then(function () {
@@ -253,22 +253,22 @@ app.post("/department/update", ensureLogin, (req, res) => {
     }).catch(function (err) {
         console.log(err);
     })
-})
+});
 
 //routes for login/logout/register
 app.get("/login", (req, res)=>{
     res.render("login");
-})
+});
 app.get("/register", (req, res)=>{
     res.render("register");
-})
+});
 app.post("/register",(req,res)=>{
     dataServiceAuth.registerUser(req.body).then((data)=>{
         res.render("register", {successMessage: "User created"});
     }).catch((err)=>{
         res.render("register", {errorMessage: err, userName: req.body.userName});
     })
-})
+});
 app.post("/login",(req,res)=>{
     req.body.userAgent = req.get('User-Agent');
     dataServiceAuth.checkUser(req.body).then((data)=>{
@@ -281,18 +281,18 @@ app.post("/login",(req,res)=>{
     }).catch((err)=>{
         res.render("login", {errorMessage: err, userName: req.body.userName});
     })
-})
+});
 app.get("/logout", (req, res)=>{
     req.sessions.reset();
     res.redirect('/');
 })
 app.get("/userHistory", ensureLogin, (req, res)=>{
     res.render("userHistory");
-})
+});
 
 app.use((req, res) => {
     res.status(404).send("Page Not Found");
-})
+});
 
 data.initialize().then(dataServiceAuth.initialize).then(function () {
     app.listen(HTTP_PORT, function () {
