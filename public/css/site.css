@@ -1,6 +1,6 @@
 body{
     font-family: 'Mukta', sans-serif;
-    background-color: #181818;
+    background-color: #181818de;
     color: #E2E2E2;
 }
 :is(h1, h2, h3, h4, h5, h6) {
@@ -31,7 +31,8 @@ legend{
     border-radius: 0;
 }
 .form-control{
-    background-color: white;
+    background-color: rgba(185, 185, 185, 0.37);
+    color: white;
     border-style: none;
 }
 #imageFile{
