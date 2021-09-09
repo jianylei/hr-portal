@@ -29,6 +29,6 @@ Node.js, Express.js, handlebars, PostgreSQL, MongoDB, JavaScript, HTML/CSS + Boo
 <ul>
   <li>Responsive UI for desktops & mobile</li>  
   <li>Full CRUD functionalities for employee data</li>  
-  <li>Add new/edit existing dpartments</li>  
+  <li>Add new/edit existing departments</li>  
   <li>Upload images</li>  
 </ul>
