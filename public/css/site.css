@@ -1,6 +1,3 @@
-*{
-    -webkit-appearance:none;
-}
 body{
     font-family: 'Mukta', sans-serif;
     background-color: #181818de;
@@ -15,6 +12,9 @@ a{
 }
 legend{
     color: white;
+}
+select{
+    -webkit-appearance:none;
 }
 
 .container{
