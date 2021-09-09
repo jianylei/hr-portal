@@ -7,7 +7,7 @@ mongoDB used to store user log-in information.
 
 postgreSQL used for employee and department data.
 
-Live: https://webapp-web322.herokuapp.com/
+Live: https://hr-portal-myapp.herokuapp.com
 (Hosted by Heroku)
 
 Test user:<br>
