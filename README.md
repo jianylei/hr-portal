@@ -8,8 +8,8 @@
 <a href="https://hr-portal-myapp.herokuapp.com">Live App</a><br>
 Test user:
 ```
-Username: admin1
-Password: admin1
+Username: admin
+Password: admin
 ```
 
 ## Table of Contents
